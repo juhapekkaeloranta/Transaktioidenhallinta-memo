@@ -97,3 +97,19 @@ INSERT VALUES (x5, v5) INTO r;
 ROLLBACK;
 COMMIT;
 ```
+
+
+### Tehtävä 4
+>Vain tietokannan operaatiot. Lisäksi DBMS laskee esim keskiarvon luetuista salary-arvoista ja tekee if-operaatiot.
+
+Molemmat:
+BW[salary, u, max(u, 2000)]R[salary]AW-1[salary, u, max(u, 2000)]W[salary, u, u\*1.05]R[salary]AW-1[salary, u, u\*1.05]C
+
+Ensimmäinen:
+BW[salary, u, max(u, 2000)]R[salary]AW-1[salary, u, max(u, 2000)]W[salary, u, u\*1.05]R[salary]C
+
+Toinen:
+BW[salary, u, max(u, 2000)]R[salary]W[salary, u, u\*1.05]R[salary]AW-1[salary, u, u\*1.05]C
+
+Ei kumpikaan:
+BW[salary, u, max(u, 2000)]R[salary]W[salary, u, u\*1.05]R[salary]C
