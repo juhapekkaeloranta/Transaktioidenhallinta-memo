@@ -91,11 +91,68 @@
 
 ### Puskureista
   
+* **Buffer pool**
+  * koostuu: **buffer frame**istä
+  * sivu oltava puskurissa käsittelyä varten
+  * siirto puskuriin: naulinta (fix, pin)
+  * naulinnan vapautuksen tekee kutsunut prosessi!
+  * sivu poistuu puskurista LRU mukaisesti
+* **Buffer control block**
+  * keskusmuistirakenne
+  * sivun tunniste, sijainti, pin-counter, ...
+  * **Puskurinhallitsin** ylläpitää
+* **Pin**
+  * read:
+    * read-latch sivulle (pin ajaksi)
+    * write-lock monikolle (commit asti)
+  * update:
+    * write-latch sivulle
+    * write-lock monikolle
+
+### Tietokannan tila
+ 
+* Levyversio
+* Puskuriversio
+* Nykyversio
+
+* Elvytys - **restart recovery**
+  * Puskuri (ram) häviää
+  * Lokissa tallessa sitoutuneet transaktiot
+  * Luodaan uudestaan transaktiot
+ 
+* Tarkistuspiste - **checkpoint**
+  * esim 5-10 min
+  * osa sivuista levylle
+  * täydellinen = kaikki levylle
+  * indirect/fuzzy checkpoint: osa levylle
+ 
+* Tiedoston vapaa tila
+  * harva B-puu: indeksointiattribuutti määrittää uuden sivun sijoitussivun
+  * sivu täynnä? => sivu halki
+  * tyhjien sivujen ketju
+  * space map
+
+* Tilan eheys
+  * Sisäinen tietorakenne eheä
+  * Sivut muodostavat tiedostorakenteen mukaisen verkkorakenteen
+    * puun tasapainoehdot jne
+  * Eheysvaatimukset vain nykyversiolle
+
+* Salpauskäytäntö
+  * Read-latch
+    * kaikki saavat lukea
+    * kukaan ei voi kirjoittaa
+  * Write-latch
+    * Lukitsija voi kirjoittaa
+    * Muut eivät voi edes lukea
+  * Unlatch _Latcher must release it's latches_
+  * Toteutus: semafori
+    * jonotus
+  * Ei lukkiutumien havaitsemista
+  * Täytyy estää lukkiumat
   
-  
-  
-  
-  
-  
-  
-  
+* Konttaus - **Latch-coupling**
+  * "Lukuketju" esim B-puussa
+  * siirtymähetkellä 2 latchiä
+
+* Rakennemuutokset
