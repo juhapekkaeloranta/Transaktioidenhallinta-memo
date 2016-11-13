@@ -155,4 +155,18 @@
   * "Lukuketju" esim B-puussa
   * siirtymähetkellä 2 latchiä
 
-* Rakennemuutokset
+* Rakennemuutokset - **Structure modification**
+  * Sivujen halkaisut
+  * Sivujen poistot
+  * Atomisuus vaatimus! => kirjoitussalpa
+  * Keskeytynyt transaktio:
+    * Rakennemuutos jäätävä voimaan!
+  
+* Uusi sivu
+  * Ol. että _kasa_ (peräkkäistiedosto, sivut: linked list)
+  * Eli lisätään uusi sivu viimeiseksi
+  * Kirjoitussalpa:
+    * varauskuvaajan sivu
+    * viimeinen sivu kasassa
+    * uusi sivu
+    * ensimmäinen sivu (koska tieto viimeisestä sivusta)
